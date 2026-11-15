@@ -1,6 +1,8 @@
 // Página pública: solo el Panel, en inglés, sin intranet ni login.
 // Repite lo mínimo de app.js (unir PSI con nuestra capa y la relevancia 0–100) para no arrastrar toda la intranet.
 import { PSI } from './data/psi.js';
+// Embedded in another page (?embed=…): never start the guided tour on its own
+if (/[?&]embed=/.test(location.search)) { try { localStorage.setItem('astale-tour-firetwin', '1'); } catch {} }
 import { pressFeedback } from './core/morph.js';
 pressFeedback();
 import * as ES from './data/experiments.js';
@@ -13,7 +15,7 @@ const LANG = document.documentElement.lang === 'es' ? 'es' : 'en', EN = LANG ===
 // Idioma: el que eligió la persona; si nunca eligió, el de su navegador
 try {
   const pref = localStorage.getItem('astale-pub-lang') || ((navigator.language || '').toLowerCase().startsWith('es') ? 'es' : 'en');
-  if (pref !== LANG) location.replace((pref === 'es' ? 'es.html' : './') + location.hash);
+  if (pref !== LANG && !/[?&]embed=/.test(location.search)) location.replace((pref === 'es' ? 'es.html' : './') + location.search + location.hash);
 } catch {}
 document.querySelectorAll('.pub-lang a').forEach((a) => { a.classList.toggle('on', a.dataset.l === LANG); a.addEventListener('click', (e) => { e.preventDefault(); try { localStorage.setItem('astale-pub-lang', a.dataset.l); } catch {} location.href = a.getAttribute('href') + location.hash; }); });
 const ATM = 14.7;
@@ -54,11 +56,25 @@ let useClaude = /[?&]claude/.test(location.search); try { useClaude = useClaude 
 if (!useClaude) document.querySelector('.pn-engine')?.remove();
 if (location.hash.startsWith('#pn-')) window.__panelTab?.(location.hash.slice(1), false);
 
+// Embed mode: another page (the incident report of the Fire Response Protocol) shows one part of the Panel in an iframe,
+// without header, tabs or footer: ?embed=twin → the Fire Twin, ?embed=model → the model block with the data block below it.
+// ?sc={"preset":"moon","mat":"sibal"} loads that scenario into the Fire Twin.
+const EMBED = new URLSearchParams(location.search).get('embed');
+if (EMBED) {
+  document.body.classList.add('embed');
+  const show = EMBED === 'model' ? ['pn-model', 'pn-2'] : ['pn-twin'];
+  window.__panelTab?.(show[0], false);
+  show.slice(1).forEach((id) => document.getElementById(id)?.closest('.pn-tabpane')?.classList.add('on'));
+  try { const sc = JSON.parse(new URLSearchParams(location.search).get('sc') || 'null'); if (sc) setTimeout(() => window.__astaleTwin?.set(sc), 60); } catch {}
+  // Links to Panel tabs that are not shown in this view do nothing
+  document.addEventListener('click', (e) => { const a = e.target.closest('a[href^="#pn-"]'); if (a && !show.includes(a.getAttribute('href').slice(1))) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+}
+
 // Enlaces internos de la intranet que aquí no existen
 document.addEventListener('click', (e) => {
   const a = e.target.closest('a');
   if (!a) return;
-  if (a.dataset.inv) { e.preventDefault(); window.open('https://psi.nasa.gov/physci/repo/investigations/' + a.dataset.inv, '_blank', 'noopener'); return; }
+  if (a.dataset.inv) { e.preventDefault(); window.open('https://psi.nasa.gov/physci/repo/data/investigations/' + a.dataset.inv, '_blank', 'noopener'); return; }
   const h = a.getAttribute('href') || '';
   if (!h.startsWith('#')) return;
   const id = { firetwin: 'pn-twin', simulador: 'pn-twin', dashboard: 'pn-1', panel: 'pn-home' }[h.slice(1)] || h.slice(1);
