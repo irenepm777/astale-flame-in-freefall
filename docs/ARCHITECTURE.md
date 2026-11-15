@@ -2,6 +2,11 @@
 
 Astale is a static website with one small serverless function. There is no framework and no bundler: the browser loads ES modules from `src/` directly, and the build only copies them into `dist/`.
 
+It holds two versions that share the data and engine layers:
+
+- **v2 · Space Fire Response Protocol** (`index.html`, `js/protocol/`): the home page. One order at a time for each crew member during a fire, then an incident report. Described in [`PROTOCOL.md`](PROTOCOL.md).
+- **v1 · Panel** (`panel.html`, `panel-es.html`, `js/main.js`, `js/panel/`): the previous version, a dashboard in tabs. Everything below the diagram describes it, except where v2 is named.
+
 ```mermaid
 flowchart LR
   subgraph Data["Data layer (NASA)"]
@@ -30,6 +35,15 @@ flowchart LR
   FTU --> PAN
   PAN --> MAIN["main.js<br/>mounts everything"]
   MAIN --> ACC["account/ + netlify/functions/account.mts"]
+  subgraph V2["v2 · Space Fire Response Protocol"]
+    PLAN["protocol/plan.js<br/>buildPlan()"]
+    INC["protocol/incident.js<br/>simulation, alerts"]
+    SCR["protocol/screens/<br/>home, alarm, command, report"]
+  end
+  FT --> PLAN
+  EXP --> SCR
+  PLAN --> INC --> SCR
+  SCR -. embeds the Panel .-> PAN
 ```
 
 ## Layers
@@ -38,9 +52,14 @@ flowchart LR
 
 **Engine.** Pure calculation, no DOM. `fire-twin/engine.js` exposes `simulate(scenario)`, which returns the burn verdict, the CO curve and the effect of the crew's actions. `ml/` holds the learning code: seeded random numbers, decision tree, XGBoost-style and CatBoost-style boosting, the model list (`MODELS`) with the weighted ensemble, and the validation code (`crossValidate`, `metrics`). Everything is deterministic: same seed, same numbers.
 
-**Interface.** `fire-twin/ui.js` builds the form, the cards and the animated `scene.js`; `panel/` builds the tabs, the free-text search, the gap map and the model block; `ask/answer.js` parses a free-text question and answers by calling `simulate()`. `main.js` is the only entry point.
+**Protocol (v2).** `protocol/plan.js` calls `simulate()` for the chosen habitat and material and turns the result into timed actions, each with a reason calculated for that scenario and its NASA source. `protocol/incident.js` runs the simulated incident (clock, room sensors, crew, alerts) and `protocol/screens/` draws the five screens. The report's *Fire Twin* and *Model and data* tabs embed the v1 Panel with `panel.html?embed=twin|model&sc=…`; `main.js` hides the Panel's chrome in that mode.
 
-## Module map
+**Interface (v1).** `fire-twin/ui.js` builds the form, the cards and the animated `scene.js`; `panel/` builds the tabs, the free-text search, the gap map and the model block; `ask/answer.js` parses a free-text question and answers by calling `simulate()`. `main.js` is the only entry point.
+
+## Module map (v1 and shared layers)
+
+The v2 modules are listed in [`PROTOCOL.md`](PROTOCOL.md#module-map-srcjsprotocol).
+
 
 | Path | Responsibility | Main exports |
 |---|---|---|
@@ -80,9 +99,10 @@ flowchart LR
 
 ## Cross-module contracts
 
-- **Language.** Pages are `index.html` (English) and `es.html` (Spanish); the code reads `<html lang>`. Texts use a local helper `t(es, en)`.
+- **Language.** v1 pages are `panel.html` (English) and `panel-es.html` (Spanish); the code reads `<html lang>`. v2 is one page that switches language in place (`protocol/i18n.js`, also `?lang=es|en`). Both remember the choice in `localStorage` (`astale-pub-lang`) and use a helper `t(es, en)`.
 - **Events.** User actions dispatch `astale:event` on `document` with `detail.type` in `scenario`, `story`, `predict`, `ask`, `tab`; the accounts client listens to log activity.
-- **Browser hooks** (used by accounts and the tests): `window.__panelTab(id, scroll)`, `window.__astaleTwin.get()/set()`, `window.__astaleAccount`.
+- **Browser hooks** (used by accounts and the tests): `window.__panelTab(id, scroll)`, `window.__astaleTwin.get()/set()`, `window.__astaleAccount`; v2 exposes `window.__protocol` (state of the page and of the incident).
+- **Embedding.** `panel.html?embed=twin|model&sc={"preset":…,"mat":…}` shows only that block of the Panel; this is why `X-Frame-Options` is `SAMEORIGIN`.
 
 ## Rules the code follows
 
@@ -93,12 +113,13 @@ flowchart LR
 
 ## Build, deploy and tests
 
-- `scripts/build.mjs` copies `src/` to `dist/` and fails if a required file is missing.
+- `scripts/build.mjs` copies `src/` to `dist/` and fails if a required file of either version is missing.
+- Old addresses keep working through `src/_redirects`: `/fernando/…` → `panel.html` / `panel-es.html`, `/es.html` → `/?lang=es`.
 - Netlify publishes `dist/` and runs `netlify/functions/account.mts` (user accounts, stored in Netlify Blobs, signed cookie with `SESSION_SECRET`). Redirects and security headers are in `netlify.toml` and `src/_redirects`.
-- `npm test` builds into a temporary folder and runs `tests/smoke/run.mjs` in a real browser: 35 Fire Twin scenarios, 8 Panel tabs, model training and an Ask answer, compared value by value with `tests/fixtures/baseline.json` (338 values) and failing on any new browser error. CI runs the same on every pull request.
+- `npm test` builds into a temporary folder and runs `tests/smoke/run.mjs` in a real browser: 35 Fire Twin scenarios, 8 Panel tabs, model training and an Ask answer, compared value by value with `tests/fixtures/baseline.json` (338 values) and failing on any new browser error. Then `tests/smoke/protocol.mjs` checks v2: every habitat × area in English and Spanish (command screen and report) and one incident played by clicking. CI runs the same on every pull request.
 
 ## Conventions
 
 - Branches: `main` (stable), `develop` (integration), short-lived `feat/…`, `fix/…`, `refactor/…`, `docs/…`, `test/…`, `ci/…`, `build/…`; merged by pull request.
 - Commits follow Conventional Commits (`type(scope): summary`).
-- Code comments are currently written in Spanish, the team's working language; the interface and documentation are in English (Spanish in `es.html`).
+- Code comments in the v1 modules are written in Spanish, the team's working language; the v2 modules (`js/protocol/`), `protocol.css` and new tests are commented in English. The interface and documentation are in English, with Spanish as the translation (`panel-es.html` for v1, the ES switch in v2).
