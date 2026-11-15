@@ -12,7 +12,8 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "no-referrer"
-    X-Frame-Options = "DENY"
+    # SAMEORIGIN: the incident report embeds the Panel (?embed=…) from the same site
+    X-Frame-Options = "SAMEORIGIN"
     # Always use https, even if someone types http://
     Strict-Transport-Security = "max-age=31536000"
 

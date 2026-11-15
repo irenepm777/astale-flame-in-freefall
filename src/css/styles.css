@@ -824,3 +824,8 @@ a:not([class]):hover { text-decoration: underline; text-decoration-thickness: 2p
 @media (hover: none) { button:not(:disabled):hover, [role="button"]:hover, [data-tab]:hover, [data-group]:hover, .pn-row:hover, .pn-sa-try:hover, .pn-gaptry:hover, tr[data-mat]:hover, .ft-rank-t tr[data-mat]:hover, a.card:hover, a.btn:hover, .pub-lang a:hover { transform: none; box-shadow: none !important; filter: none; } }
 .ft-rank-t tr[data-mat]:hover { transform: none; box-shadow: inset 0 0 0 2px #ffd166 !important; }
 .ft-rank-t tr[data-mat]:active, .ft-rank-t tr.is-pressed { transform: none !important; box-shadow: inset 0 0 0 3px #fff !important; }
+
+/* Embed mode (?embed=twin|model): only the requested block, without the page chrome */
+body.embed .pub-top, body.embed .pub-foot, body.embed .pn-tabs, body.embed .ai-dock, body.embed .pn-homepane { display: none !important; }
+body.embed .pn-head > img { display: none; }
+body.embed { background: #07080d; } body.embed main { padding-top: 0; }
