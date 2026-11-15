@@ -9,12 +9,12 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const SRC = {
-  bass2: { t: 'BASS-II', u: 'https://psi.nasa.gov/physci/repo/investigations/PSI-25' },
-  flex: { t: 'FLEX', u: 'https://psi.nasa.gov/physci/repo/investigations/PSI-69' },
-  saffire2: { t: 'Saffire-II', u: 'https://psi.nasa.gov/physci/repo/investigations/PSI-99' },
+  bass2: { t: 'BASS-II', u: 'https://psi.nasa.gov/physci/repo/data/investigations/PSI-25' },
+  flex: { t: 'FLEX', u: 'https://psi.nasa.gov/physci/repo/data/investigations/PSI-69' },
+  saffire2: { t: 'Saffire-II', u: 'https://psi.nasa.gov/physci/repo/data/investigations/PSI-99' },
   saffire6: { t: 'Urban et al. 2024 (Saffire VI)', u: 'https://ntrs.nasa.gov/citations/20240002981' },
   saffireCO: { t: 'Saffire, ICES 2024', u: 'https://ntrs.nasa.gov/api/citations/20240007488/downloads/Saffire%20ICES%202024%20Saffire%20presentation072124small.pdf' },
-  bre: { t: 'BRE', u: 'https://psi.nasa.gov/physci/repo/investigations/PSI-20' },
+  bre: { t: 'BRE', u: 'https://psi.nasa.gov/physci/repo/data/investigations/PSI-20' },
   tien: { t: "Sacksteder y T'ien 1993", u: 'https://ntrs.nasa.gov/citations/19930040901' },
   zayac: { t: 'Zayac et al. 2024', u: 'https://ntrs.nasa.gov/citations/20240008623' },
   meyer: { t: 'Meyer 2016', u: 'https://ntrs.nasa.gov/citations/20170007283' },

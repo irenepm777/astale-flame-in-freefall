@@ -3,7 +3,7 @@ import { simulate, PRESETS, MAT, ML, FLEX_FIT, SMAC_CO } from '../fire-twin/inde
 
 const fold = (s) => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const PSI = (id, txt) => `<a href="https://psi.nasa.gov/physci/repo/investigations/${id}" target="_blank" rel="noopener">${txt}</a>`;
+const PSI = (id, txt) => `<a href="https://psi.nasa.gov/physci/repo/data/investigations/${id}" target="_blank" rel="noopener">${txt}</a>`;
 
 export function parse(q) {
   const f = fold(q);

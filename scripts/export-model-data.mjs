@@ -13,7 +13,7 @@ const csv = (rows) => rows.map((r) => r.map((v) => {
 
 // 1) Todas las condiciones ensayadas (un punto = una combinación O₂–presión de un ensayo)
 const pts = [['psi_id', 'experiment', 'research_area', 'o2_pct', 'pressure_atm', 'pressure_psi', 'source']];
-for (const p of PSI) for (const [o2, atm] of p.points) pts.push([p.id, p.acr || '', p.sub, o2, atm, +(atm * 14.7).toFixed(2), `https://psi.nasa.gov/physci/repo/investigations/${p.id}`]);
+for (const p of PSI) for (const [o2, atm] of p.points) pts.push([p.id, p.acr || '', p.sub, o2, atm, +(atm * 14.7).toFixed(2), `https://psi.nasa.gov/physci/repo/data/investigations/${p.id}`]);
 writeFileSync('src/datasets/psi_condiciones.csv', csv(pts));
 
 // 2) FLEX: gotas de combustible (ley d²)
