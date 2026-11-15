@@ -58,7 +58,7 @@ if (location.hash.startsWith('#pn-')) window.__panelTab?.(location.hash.slice(1)
 document.addEventListener('click', (e) => {
   const a = e.target.closest('a');
   if (!a) return;
-  if (a.dataset.inv) { e.preventDefault(); window.open('https://psi.nasa.gov/physci/repo/investigations/' + a.dataset.inv, '_blank', 'noopener'); return; }
+  if (a.dataset.inv) { e.preventDefault(); window.open('https://psi.nasa.gov/physci/repo/data/investigations/' + a.dataset.inv, '_blank', 'noopener'); return; }
   const h = a.getAttribute('href') || '';
   if (!h.startsWith('#')) return;
   const id = { firetwin: 'pn-twin', simulador: 'pn-twin', dashboard: 'pn-1', panel: 'pn-home' }[h.slice(1)] || h.slice(1);
