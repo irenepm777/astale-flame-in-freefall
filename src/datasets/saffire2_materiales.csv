@@ -1,0 +1,10 @@
+sample,material,thickness,flow,o2_pct,burn,direction
+2-1,Silicone,0.27 mm,20 cm/s,~ 21.5,Insignificant,Concurrent
+2-2,Silicone,0.61 mm,20 cm/s,~ 22.1,Insignificant,Concurrent
+2-3,Silicone,1.03 mm,20 cm/s,~ 22.1,Insignificant,Concurrent
+2-4,Silicone,037 mm,20 cm/s,~ 22.1,Insignificant,Opposed
+2-5,Cotton-Fiberglass (SIBAL),037 mm,20 cm/s,~ 22.1,145 s,Concurrent
+2-6,,037 mm,20 cm/s,~ 22.1,115 s,Concurrent
+2-7,PMMA & Nomex,0.85 and 0.37 mm,20 cm/s,~ 22.1,140 s,Concurrent
+2-8,PMMA,See Fig. 5,20 cm/s,22.1 to 22.0,600 s,Concurrent
+2-9,,1 cm,20 cm/s,22.0 to 21.9,900 s,Concurrent

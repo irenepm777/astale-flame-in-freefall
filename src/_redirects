@@ -1,0 +1,5 @@
+# The v1 Panel used to live under /fernando/ and at the site root: keep those links working
+/fernando/es.html  /panel-es.html  301
+/fernando/*  /panel.html  301
+/fernando  /panel.html  301
+/es.html  /?lang=es  301

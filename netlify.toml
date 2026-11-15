@@ -1,0 +1,24 @@
+# astale.com on Netlify: static site built from src/ into dist/, plus one serverless function (user accounts).
+[build]
+  command = "node scripts/build.mjs"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
+    # SAMEORIGIN: the incident report embeds the Panel (?embed=…) from the same site
+    X-Frame-Options = "SAMEORIGIN"
+    # Always use https, even if someone types http://
+    Strict-Transport-Security = "max-age=31536000"
+
+[[redirects]]
+  from = "https://www.astale.com/*"
+  to = "https://astale.com/:splat"
+  status = 301
+  force = true
