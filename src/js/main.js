@@ -1,4 +1,4 @@
-// Página pública: solo el Panel, en inglés, sin intranet ni login.
+// v1 Panel (the previous version of Astale), served at panel.html and panel-es.html. The home page is the protocol (js/protocol/).
 // Repite lo mínimo de app.js (unir PSI con nuestra capa y la relevancia 0–100) para no arrastrar toda la intranet.
 import { PSI } from './data/psi.js';
 // Embedded in another page (?embed=…): never start the guided tour on its own
@@ -15,7 +15,7 @@ const LANG = document.documentElement.lang === 'es' ? 'es' : 'en', EN = LANG ===
 // Idioma: el que eligió la persona; si nunca eligió, el de su navegador
 try {
   const pref = localStorage.getItem('astale-pub-lang') || ((navigator.language || '').toLowerCase().startsWith('es') ? 'es' : 'en');
-  if (pref !== LANG && !/[?&]embed=/.test(location.search)) location.replace((pref === 'es' ? 'es.html' : './') + location.search + location.hash);
+  if (pref !== LANG && !/[?&]embed=/.test(location.search)) location.replace((pref === 'es' ? 'panel-es.html' : 'panel.html') + location.search + location.hash);
 } catch {}
 document.querySelectorAll('.pub-lang a').forEach((a) => { a.classList.toggle('on', a.dataset.l === LANG); a.addEventListener('click', (e) => { e.preventDefault(); try { localStorage.setItem('astale-pub-lang', a.dataset.l); } catch {} location.href = a.getAttribute('href') + location.hash; }); });
 const ATM = 14.7;

@@ -9,5 +9,5 @@ const result = join(site, 'result.json');
 const run = (...args) => execFileSync('node', args, { stdio: 'inherit' });
 
 run('scripts/build.mjs', site);
-run('tests/smoke/run.mjs', site, result, process.env.SMOKE_ENTRY || '/index.html');
+run('tests/smoke/run.mjs', site, result, process.env.SMOKE_ENTRY || '/panel.html');
 run('tests/smoke/compare.mjs', 'tests/fixtures/baseline.json', result);

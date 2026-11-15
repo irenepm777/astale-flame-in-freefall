@@ -15,7 +15,7 @@ async function loadPlaywright() {
   }
 }
 const { chromium } = await loadPlaywright();
-const [dir, out, entry = '/index.html'] = process.argv.slice(2);
+const [dir, out, entry = '/panel.html'] = process.argv.slice(2);
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.csv': 'text/csv', '.json': 'application/json', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg', '.png': 'image/png', '.mp4': 'video/mp4' };
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html';
@@ -62,7 +62,7 @@ res.historia = await page.evaluate(() => ({ q3: document.querySelector('#ft-q3')
 res.panel = [];
 for (const id of ['pn-home', 'pn-ask', 'pn-model', 'pn-1', 'pn-2', 'pn-3', 'pn-4', 'pn-about']) {
   await page.evaluate((id) => window.__panelTab(id, false), id);
-  if (id === 'pn-model') await page.waitForFunction(() => document.querySelector('.ml-res table, .ml-res .tbl') && document.querySelector('.ml-out .ml-big'), { timeout: 120000 }).catch(() => errores.push('el bloque de modelo no terminó de entrenar'));
+  if (id === 'pn-model') await page.waitForFunction(() => document.querySelector('.ml-res table, .ml-res .tbl'), { timeout: 120000 }).catch(() => errores.push('el bloque de modelo no terminó de entrenar'));
   await page.waitForTimeout(300);
   res.panel.push([id, await page.evaluate((id) => (document.getElementById(id)?.innerText || '').replace(/\s+/g, ' ').slice(0, 6000), id)]);
 }
