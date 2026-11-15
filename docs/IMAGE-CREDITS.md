@@ -80,3 +80,21 @@ Details for each one: https://images.nasa.gov/details/<NASA ID>
 | zona/electrico.jpg | KSC-20240223-PH-RNS01_0002 | Orion (Artemis II) equipment and conduits |
 | zona/almacen.jpg | S111E5041 | Cargo bags on Endeavour (STS-111) |
 | real/orion-interior.jpg | KSC-20240223-PH-RNS01_0003 | Interior of Orion (Artemis II), without crew |
+
+## Images of the Fire Response Protocol (v2, `src/assets/img/`)
+
+The home page of v2 uses NASA photos of empty places (no crew in them) and our own drawings.
+
+| File | NASA ID | What is shown | Used for |
+|---|---|---|---|
+| habitats/iss007e11800.jpg | iss007e11800 | Inside the Destiny laboratory of the ISS | "Space Station (ISS)" card |
+| habitats/art002e016299.jpg | art002e016299 | Orion (Artemis II) with the Moon behind it | "Orion (cruise)" card |
+| habitats/orion-interior.jpg | KSC-20240223-PH-RNS01_0003 | Inside Orion (Artemis II), without crew | "Orion · exploration atmosphere" card |
+| habitats/7036668.jpg | 7036668 | Surface of the Moon, Apollo 17 (Taurus-Littrow) | "Moon base" card |
+| habitats/PIA24264.jpg | PIA24264 | Surface of Mars, Perseverance panorama | "Mars base" card |
+
+On the home page the five photos are shown in a common blue tone.
+
+**Own drawings (no third-party rights):** `zones/*.svg` (galley, sleeping area, laboratory, equipment and cables, storage) and `materials/*.svg` (cabin fabric, acrylic sheet, acrylic rod, Nomex, silicone, mixed items). They replaced the zone photos listed above, so that every area card has the same style and no people.
+
+**Team photos** (`team/*.jpg`): supplied by each team member for the About page and the report.
