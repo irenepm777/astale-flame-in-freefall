@@ -15,7 +15,7 @@ async function loadPlaywright() {
   }
 }
 const { chromium } = await loadPlaywright();
-const [dir, out, entry = '/index.html'] = process.argv.slice(2);
+const [dir, out, entry = '/panel.html'] = process.argv.slice(2);
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.csv': 'text/csv', '.json': 'application/json', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg', '.png': 'image/png', '.mp4': 'video/mp4' };
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html';
