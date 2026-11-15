@@ -1,0 +1,42 @@
+pi,sample,geometry,air_cm_s,o2_burning_pct,o2_extinction_pct
+Miller,3 mm thick PMMA 1 sided 2 cm wide,slab,20 15 13 14,22.2,21.2
+Miller,2 cm wide 5 mm thick 1 sided PMMA,slab,10 20 18,20.8,19.7
+Miller,5 mm thick PMMA 2 cm wide,slab,5 4 3,21.8,19.8
+Miller,3 mm thick PMMA 2 sided 2 cm thick,slab,20 13 10 8 5,22.2,19
+Miller,1 mm thick PMMA 2 cm wide,slab,10 5 3 0,21.8,20.7
+Miller,1 cm wide PMMA 2 mm thick,slab,10 5>7 5 decr,19.1,18.2
+Miller,4 mm thick 1 cm wide PMMA slab,slab,10 17 14 10 8,20.1,18.6
+Miller,1 cm wide PMMA 5 mm thick,slab,10 20 15 12,20,18.5
+Miller,2 mm thick PMMA 2 cm wide,slab,<1,21.7,20.4
+Miller,4 mm thick PMMA 2 cm wide,slab,6 5 4,20.8,19
+Miller,2mm thick PMMA 1 sided 2 cm wide,slab,10 ~8,22.2,21.6
+Miller,2 cm 4 mm 1 sided PMMA slab,slab,10 8 7 8 10 20 18 16 15,21,20
+Miller,2 cm wide PMMA 2 mm thick,slab,10 5 3 0ext,18.8,17.1
+Miller,2 cm wide PMMA 3 mm thick,slab,10 15 (brief) 10 8,17.9,16.8
+Miller,4 mm thick 2 cm 2ide PMMA slab,slab,10 17 14 10 7 5,19,17.4
+Miller,5 mm thick PMMA 2 cm wide,slab,10 8,18,17.4
+Olson,"3/8""clear rod",rod,5 down to ext,14.8,13.6
+Olson,"1/2"" clear PMMA rod",rod,5 10 5 2 0 (49 62 49 44 42),15.1,14.2
+Olson,"1/4"" clear rod",rod,see fan,16.7,16
+Olson,"1/4"" clear rod",rod,5 2 0 max,16.7,16.1
+Olson,"1/4"" black rod",rod,5 down then blowoff,15.4,14.8
+Olson,"1/2"" clear PMMA rod",rod,49 44 42 41 41 40.5 (5 2 0),15.9,14.6
+Olson,"1/4"" black rod",rod,5 down to ext,16.3,15.3
+Olson,"3/8"" clear rod",rod,5 0,16.7,15.6
+Olson,"1/4"" clear rod",rod,3 0 11,15.1,14.3
+Olson,"1/4"" clear rod",rod,5 2 0 11 2 11 2 0,15.2,14.5
+Olson,"1/4"" clear rod",rod,5 down to ext,15.3,14.6
+Olson,"1/4"" clear rod",rod,5 8 incr to max 38.5,16.5,15.9
+Fernandez-Pello,1/4 clear rod,rod,5 very low (0.85 0.32 0.31 0.305 0.30 0.295),17.4,16.8
+Fernandez-Pello,"3/8"" black rod",rod,5 pots 0.4 0.36 0.32 0.308 .3 off,18.5,17.1
+Fernandez-Pello,"0.5"" black rod",rod,5 down to ext,19.3,17.6
+Fernandez-Pello,"1/4"" black rod",rod,5 pots 0.4 0.36 0.32 0.31 0.30 extinguished,17,16.4
+Fernandez-Pello,"3/8"" black rod",rod,5 3 2 1 0.5 lower,17.5,16.8
+Fernandez-Pello,"0.5"" black rod",rod,5 down to ext,20.7,19.1
+Fernandez-Pello,"1/4"" black rod",rod,5 8 2 low,18.2,17.4
+Fernandez-Pello,"1/4"" black rod",rod,2 0 2 0 etc,20,19
+Fernandez-Pello,"1/4"" black rod",rod,5 8 2 max 0,17.5,16.7
+Fernandez-Pello,"1/4"" black rod",rod,2 0 2 0 etc,19,18.2
+Fernandez-Pello,"3/8"" black rod",rod,2 0 2 0 etc,18.2,17
+Fernandez-Pello,"3/8"" black rod",rod,2 0 2 0 etc,19,17.5
+Fernandez-Pello,"3/8"" clear rod",rod,5 down to ext,20.9,20.2
