@@ -25,7 +25,7 @@ const server = http.createServer((req, res) => {
 }).listen(0);
 const port = server.address().port;
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || undefined, args: ['--no-sandbox'] });
-const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
+const page = await browser.newPage({ viewport: { width: 1600, height: 1000 }, locale: 'en-US' }); // pinned: the Panel follows the browser language
 const errores = [];
 page.on('pageerror', (e) => errores.push('pageerror: ' + e.message));
 page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errores.push('console: ' + m.text()); });
@@ -62,7 +62,11 @@ res.historia = await page.evaluate(() => ({ q3: document.querySelector('#ft-q3')
 res.panel = [];
 for (const id of ['pn-home', 'pn-ask', 'pn-model', 'pn-1', 'pn-2', 'pn-3', 'pn-4', 'pn-about']) {
   await page.evaluate((id) => window.__panelTab(id, false), id);
-  if (id === 'pn-model') await page.waitForFunction(() => document.querySelector('.ml-res table, .ml-res .tbl') && document.querySelector('.ml-out .ml-big'), { timeout: 120000 }).catch(() => errores.push('el bloque de modelo no terminó de entrenar'));
+  if (id === 'pn-model') {
+    await page.waitForFunction(() => document.querySelector('.ml-res table, .ml-res .tbl') && document.querySelector('.ml-out .ml-big'), { timeout: 120000 }).catch(() => errores.push('el bloque de modelo no terminó de entrenar'));
+    // the final ensemble trains after the comparison table: wait for the prediction form too
+    await page.waitForFunction(() => !/Training…/.test(document.querySelector('#pn-model .ml-out')?.innerText || ''), { timeout: 120000 }).catch(() => errores.push('el modelo final no terminó de entrenar'));
+  }
   await page.waitForTimeout(300);
   res.panel.push([id, await page.evaluate((id) => (document.getElementById(id)?.innerText || '').replace(/\s+/g, ' ').slice(0, 6000), id)]);
 }
